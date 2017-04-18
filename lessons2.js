@@ -24,6 +24,7 @@ console.log(parseInt(var3)+var4); // приведение строки к чис
 </script>
 
 // 2.Определите типы следующих переменных:;
+
 var art = “25 / 5”; // string - простая строка
 var same = null; // object - специальное значение «ничто»
 var scoop; // undefined - значение не присвоено
@@ -57,3 +58,8 @@ text3 = text3.toLowerCase();
 function capitalize(str) {
 	var firstLetter = str.charAt(0);
 	return firstLetter.toUpperCase() + str.slice(1);
+}
+	console.log(capitalize(text1));
+	console.log(capitalize(text2));
+	console.log(capitalize(text3));
+	
