@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>ДЗ #3</title>
+</head>
+
+<body>
+<div class="container" style="width: 30%">
+    <h2 class="text-center">Калькулятор</h2>
+    <div class="form-horizontal" id="form1">
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="operand1">Первое значение:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="operand1" placeholder="Введите число">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-4" for="operand2">Второе значение:</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" id="operand2" placeholder="Введите число">
+            </div>
+        </div>
+
+        <div class="form-group">
+        	<label class="control-label col-sm-3">Действие:</label>
+            <div class="col-sm-9">
+                <button class="btn btn-default" onclick="summ();">+</button>
+                <button class="btn btn-default" onclick="subtr();">-</button>
+                <button class="btn btn-default" onclick="multiply();">*</button>
+                <button class="btn btn-default" onclick="divide();">/</button>
+                <button class="btn btn-default" onclick="percent();">%</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="result">Результат:</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" id="result" readonly>
+            </div>
+        </div>
+
+        <h2 class="text-center">Угадай число</h2>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <textarea class="form-control" name="gamelog" id="gamelog" rows="10" readonly></textarea>
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <div class="col-sm-offset-1 col-sm-9">
+                <input type="text" class="form-control" id="gamenumber" placeholder="Введите число!">
+            </div>
+            <div class="col-sm-1">
+                <button onclick="gameStep()" class="btn btn-default">Проверить!</button>
+            </div>
+        </div>
+
+        <h2 class="text-center">Генератор паролей</h2>
+        <div class="form-group">
+        	<div class="form-group text-center">
+            <label class="control-label col-sm-4" for="symbolsamount">Количество символов:</label>
+	            <div class="col-sm-offset-1 col-sm-2">
+	                <input type="text" class="form-control" id="symbolsamount" value="12">
+	            </div>
+	            <div class="col-sm-5">
+	                <button onclick="generatePassword()" class="btn btn-default">Сгенерировать</button>
+	            </div>
+        	</div>
+
+            <label class="control-label col-sm-5" for="newpassword">Сгенерированный пароль:</label>
+	            <div class="col-sm-7">
+	                <input type="text" class="form-control" id="newpassword">
+	            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    
+    // Калькулятор
+
+    var resultField = document.getElementById("result");
+    var op1Field = document.getElementById("operand1");
+    var op2Field = document.getElementById("operand2");
+    function summ() {
+        resultField.value = parseFloat(op1Field.value) + parseFloat(op2Field.value);
+    }
+    function subtr() {
+        resultField.value = parseFloat(op1Field.value) - parseFloat(op2Field.value);
+    }
+    function multiply() {
+        resultField.value = parseFloat(op1Field.value) * parseFloat(op2Field.value);
+    }
+    function divide() {
+        if (parseFloat(op2Field.value) !== 0) {
+            resultField.value = parseFloat(op1Field.value) / parseFloat(op2Field.value);
+        } 
+        else {
+            resultField.value = "Деление на ноль!";
+        }
+    }
+    function percent() {
+        resultField.value = parseFloat(op1Field.value) % parseFloat(op2Field.value);
+    }
+    
+    // Угадай число
+
+    var gamelog = document.getElementById("gamelog");
+    var gamenumber = document.getElementById("gamenumber");
+    var maxNumber = 100;
+    var rndNumber = 0;
+    function newGame() {
+        rndNumber = Math.floor(Math.random() * maxNumber);
+        gamelog.value += "Загадано число от 0 до " + maxNumber + " !" + "\n";
+        gamelog.scrollTop = gamelog.scrollHeight;
+        console.log(rndNumber);
+    }
+    newGame();
+    function gameStep() {
+        var userNumber = parseInt(gamenumber.value);
+        if (userNumber > rndNumber) {
+            gamelog.value += "Ваше число: " + userNumber + " - не верно! Загаданное число - больше!\n";
+        } else if (userNumber < rndNumber) {
+            gamelog.value += "Ваше число: " + userNumber + " - не верно! Загаданное число - меньше!\n";
+        } else if (userNumber == rndNumber) {
+            gamelog.value += "Правильно! Было загаданно: " + userNumber + " !" + "\n";
+            newGame();
+        }
+        gamelog.scrollTop = gamelog.scrollHeight;
+    }
+    
+    // Генератор паролей
+
+    var newpassword = document.getElementById("newpassword");
+    var symbolsamount = document.getElementById("symbolsamount");
+    function generatePassword() {
+        var symbolsAmount = parseInt(symbolsamount.value);
+        var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+        var lng = charset.length;
+        var result = "";
+        for (var i = 0; i < symbolsAmount; i++) {
+            result += charset.charAt(Math.floor(Math.random() * lng));
+        }
+        newpassword.value = result;
+    }
+
+</script>
+
+</body>
+
+</html>
